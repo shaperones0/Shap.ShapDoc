@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shap.Flexer", "Ext\Shap.Fle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shap.ShapDoc.CodeConverter", "CodeConverter\Shap.ShapDoc.CodeConverter.csproj", "{1A4FA1CE-BB7D-4364-BFEE-094C45C5F3F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shap.ShapDoc.Export", "Export\Shap.ShapDoc.Export.csproj", "{82431E4E-D255-4293-9702-E769D4591FA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shap.ShapDoc.Sample", "Sample\Shap.ShapDoc.Sample.csproj", "{B22BA097-33D8-447F-A3FA-8C692A055A42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{1A4FA1CE-BB7D-4364-BFEE-094C45C5F3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A4FA1CE-BB7D-4364-BFEE-094C45C5F3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A4FA1CE-BB7D-4364-BFEE-094C45C5F3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82431E4E-D255-4293-9702-E769D4591FA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82431E4E-D255-4293-9702-E769D4591FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82431E4E-D255-4293-9702-E769D4591FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82431E4E-D255-4293-9702-E769D4591FA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B22BA097-33D8-447F-A3FA-8C692A055A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B22BA097-33D8-447F-A3FA-8C692A055A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B22BA097-33D8-447F-A3FA-8C692A055A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B22BA097-33D8-447F-A3FA-8C692A055A42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -238,47 +238,47 @@ namespace Shap.ShapDoc.Parser
         {
             flexer = new();
             flexer.Register(TokenType.Free)
-                .When(CharClass.Whitespace).ChangeState(TokenType.Space)
                 .When('\n').ChangeState(TokenType.ParagraphBreakOrSpace).Skip()
                 .When('"').ChangeState(TokenType.PreformattedText).Skip()
                 .When('&').ChangeState(TokenType.EscapeSeq).Skip()
                 .When('<').ChangeState(TokenType.TagBegin).Skip()
                 .When('>').Error("Closing tag outside of tag structure")
+                .When(CharClass.Whitespace).ChangeState(TokenType.Space)
                 .Otherwise().ChangeState(TokenType.Word)
                 .WhenEofDropState();
             flexer.Register(TokenType.Word)
-                .When(CharClass.Whitespace).NextState(TokenType.Space)
                 .When('\n').NextState(TokenType.ParagraphBreakOrSpace).Skip()
                 .When('"').NextState(TokenType.PreformattedText).Skip()
                 .When('&').NextState(TokenType.EscapeSeq).Skip()
                 .When('<').NextState(TokenType.TagBegin).Skip()
                 .When('>').Error("Closing tag outside of tag structure")
+                .When(CharClass.Whitespace).NextState(TokenType.Space)
                 .Otherwise().Consume()
                 .WhenEofYieldState();
             flexer.Register(TokenType.Space)
-                .When(CharClass.Whitespace).Skip()
                 .When('\n').ChangeState(TokenType.ParagraphBreakOrSpace).Skip()
                 .When('"').NextState(TokenType.PreformattedText).Skip()
                 .When('&').NextState(TokenType.EscapeSeq).Skip()
                 .When('<').NextState(TokenType.TagBegin).Skip()
                 .When('>').Error("Closing tag outside of tag structure")
+                .When(CharClass.Whitespace).Skip()
                 .Otherwise().NextState(TokenType.Word)
                 .WhenEofDropState();
             flexer.Register(TokenType.ParagraphBreakOrSpace)
-                .When(CharClass.Whitespace).Skip()
                 .When('\n').ChangeState(TokenType.ParagraphBreak).Skip()
                 .When('"').ChangeState(TokenType.Space).NextState(TokenType.PreformattedText).Skip()
                 .When('&').ChangeState(TokenType.Space).NextState(TokenType.EscapeSeq).Skip()
                 .When('<').ChangeState(TokenType.Space).NextState(TokenType.TagBegin).Skip()
                 .When('>').Error("Closing tag outside of tag structure")
+                .When(CharClass.Whitespace).Skip()
                 .Otherwise().ChangeState(TokenType.Space).NextState(TokenType.Word)
                 .WhenEofDropState();
             flexer.Register(TokenType.ParagraphBreak)
-                .When(CharClass.Whitespace, '\n').Skip()
                 .When('"').NextState(TokenType.PreformattedText).Skip()
                 .When('&').NextState(TokenType.EscapeSeq).Skip()
                 .When('<').NextState(TokenType.TagBegin).Skip()
                 .When('>').Error("Closing tag outside of tag structure")
+                .When(CharClass.Whitespace, '\n').Skip()
                 .Otherwise().NextState(TokenType.Word)
                 .WhenEofDropState();
 
@@ -299,11 +299,11 @@ namespace Shap.ShapDoc.Parser
                 .Otherwise().Error("Invalid character in tag")
                 .WhenEofError();
             flexer.Register(TokenType.TagWord)
-                .When(CharClass.LatinLetter, CharClass.Number, '_', '-').Consume()
-                .When(CharClass.Whitespace, '\n').NextState(TokenType.TagSpace)
                 .When('=').NextState(TokenType.TagEquals).Skip()
                 .When('/').NextState(TokenType.TagModifierSingletonTag).Skip()
                 .When('>').NextState(TokenType.TagEnd).Skip()
+                .When(CharClass.Whitespace, '\n').NextState(TokenType.TagSpace)
+                .When(CharClass.LatinLetter, CharClass.Number, '_', '-').Consume()
                 .Otherwise().Error("Invalid character in tag")
                 .WhenEofError();
 
@@ -318,15 +318,15 @@ namespace Shap.ShapDoc.Parser
                 .WhenEofError();
 
             flexer.Register(TokenType.TagSpace)
+                .When('=').ChangeState(TokenType.TagEquals).Skip()
                 .When(CharClass.Whitespace, '\n').Skip()
                 .When(CharClass.LatinLetter).ChangeState(TokenType.TagWord).Consume()
-                .When('=').ChangeState(TokenType.TagEquals).Skip()
                 .Otherwise().Error("Invalid character in tag")
                 .WhenEofError();
 
             flexer.Register(TokenType.TagEquals)
-                .When(CharClass.Whitespace).Skip()
                 .When('"').ChangeState(TokenType.TagParamValue).Skip()
+                .When(CharClass.Whitespace).Skip()
                 .Otherwise().Error("Invalid character in tag")
                 .WhenEofError();
 

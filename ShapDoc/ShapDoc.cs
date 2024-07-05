@@ -4,7 +4,7 @@ namespace Shap.ShapDoc
 {
     public class ShapDoc(ShapDoc.Node root)
     {
-        [DebuggerDisplay("<{TagName} args[{Args.Count}] children[{Children.Count}]>")]
+        [DebuggerDisplay("<{Name} args[{Args.Count}] children[{Children.Count}]>")]
         public class Node(string name, Node? parent,
             Dictionary<string, string?>? args = null, List<Node>? children = null)
         {

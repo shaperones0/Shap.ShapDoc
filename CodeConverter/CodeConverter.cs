@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -34,7 +35,7 @@ namespace Shap.ShapDoc.CodeConverter
                 ["098658"] = Tags.Number,
                 ["001080"] = Tags.Variable,
                 ["a31515"] = Tags.String,
-                ["795d26"] = Tags.Function,
+                ["795e26"] = Tags.Function,
                 ["267f99"] = Tags.Class,
                 ["008000"] = Tags.Comment
             },
@@ -47,7 +48,7 @@ namespace Shap.ShapDoc.CodeConverter
                 ["098658"] = Tags.Number,
                 ["001080"] = Tags.Variable,
                 ["a31515"] = Tags.String,
-                ["795d26"] = Tags.Function,
+                ["795e26"] = Tags.Function,
                 ["267f99"] = Tags.Class,
                 ["008000"] = Tags.Comment
             },
@@ -58,45 +59,31 @@ namespace Shap.ShapDoc.CodeConverter
         public string Convert(IEnumerable<char> input, Dictionary<string, Tags> table)
         {
             IEnumerator<char> inputEnumerator = input.GetEnumerator();
+            int toSkip = 0;
             do
             {
-                inputEnumerator.MoveNext();
+                inputEnumerator.MoveNext(); toSkip++;
             } while (inputEnumerator.Current != '<');
 
-            XmlDocument doc = htmlDeserialzer.Deserialize(input);
+            List<List<ColoredSpan>> code = new FormattedTextDeserializer().Deserialize(input.Skip(toSkip-1));
             List<string> output = ["<pcode>"];
 
-            XmlNodeList divs = doc.ChildNodes[0]!.ChildNodes[1]!.ChildNodes[1]!.ChildNodes[1]!.ChildNodes;
-            foreach (XmlNode div in divs)
+            foreach (List<ColoredSpan> line in code)
             {
-                if (div.Name != "div") throw new ArgumentException("Input doesn't contain valid formatted text", nameof(input));
-                XmlNodeList spans = div.ChildNodes;
-                foreach (XmlNode spanOrBr in spans)
+                foreach (ColoredSpan codeNode in line)
                 {
-                    switch (spanOrBr.Name)
+                    if (table.TryGetValue(codeNode.colorCode, out Tags tag))
                     {
-                        case "span":
-                            XmlAttribute styleAttr = spanOrBr.Attributes![0];
-                            if (styleAttr.Name != "style") throw new ArgumentException("Input doesn't contain valid formatted text", nameof(input));
-                            string colorStr = styleAttr.Value.Substring(8, 6);
-
-                            if (table.TryGetValue(colorStr, out Tags tags))
-                            {
-                                output.Add($"<pcn type=\"{Enum.GetName(tags)}\">{spanOrBr.InnerText}</pcn>");
-                            }
-                            else throw new KeyNotFoundException("Unable to understand given color");
-                            break;
-                        case "br":
-                            output.Add("<pcbr/>");
-                            break;
-                        default:
-                            throw new ArgumentException("Input doesn't contain valid formatted text", nameof(input));
+                        string unescaped = WebUtility.HtmlDecode(codeNode.str);
+                        string escaped = WebUtility.HtmlEncode(unescaped);  // TODO oh gwd make it stop
+                        output.Add($"<pcn type=\"{Enum.GetName(tag)}\" text=\"{escaped}\"></pcn>");
                     }
-                    
+                    else throw new KeyNotFoundException("Unable to understand given color");
                 }
                 output.Add("<pcbr/>");
             }
 
+            output.RemoveRange(output.Count - 3, 3);
             output.Add("</pcode>");
             return string.Join("", output);
         }
