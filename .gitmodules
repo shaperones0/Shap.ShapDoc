@@ -1,0 +1,3 @@
+[submodule "Ext/Shap.Flexer"]
+	path = Ext/Shap.Flexer
+	url = https://github.com/shaperones0/Shap.Flexer
