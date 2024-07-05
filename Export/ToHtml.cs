@@ -94,7 +94,7 @@
         {
             ShapDoc.Node? headNode = doc.Root.FindChild("head");
             HeadInfo headInfo = headNode != null ? GatherHeadInfo(headNode) : new();
-            string htmlBegin = @$"<html><head><title>{headInfo.title}</title><style>@font-face{{font-family:CMUSerif;src:url(data/fnt/cmunrm-msofix.ttf)}}@font-face{{font-family:CMUSerif;font-weight:700;src:url(data/fnt/cmunbx-msofix.ttf)}}@font-face{{font-family:Consolas;src:url(data/fnt/consola.ttf)}}:root{{--code_space:#3b3b3b;--code_keyword1:#af00db;--code_keyword2:#0000ff;--code_operator:#000000;--code_number:#098658;--code_variable:#001080;--code_string:#a31515;--code_function:#795e26;--code_class:#267f99;--code_comment:#008000}}body{{font-family:""Times New Roman"",Times,serif;width:850px;margin-left:auto;margin-right:auto;font-size:20;margin-bottom:300px}}h1,h2{{font-family:CMUSerif,serif}}img{{width:850px;object-fit:contain}}div.code{{border-style:solid;border-width:1px;padding:5px 5px 5px 5px;font-family:Consolas,Consolas,monospace;font-size:14;background-color:#f0f0f0}}span.code-Space{{color:var(--code_space)}}span.code-Keyword1{{color:var(--code_keyword1)}}span.code-Keyword2{{color:var(--code_keyword2)}}span.code-Operator{{color:var(--code_operator)}}span.code-Number{{color:var(--code_number)}}span.code-Variable{{color:var(--code_variable)}}span.code-String{{color:var(--code_string)}}span.code-Function{{color:var(--code_function)}}span.code-Class{{color:var(--code_class)}}span.code-Comment{{color:var(--code_comment)}}</style></head><body>";
+            string htmlBegin = string.Format(Resources.HtmlBegin, headInfo.title);
             string htmlEnd = "</body></html>";
             List<string> htmlInner = [];
 
