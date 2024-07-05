@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Sample": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\dev\\repo\\Shap.ShapDoc\\Exe\\example.shapdoc\" \"C:\\dev\\repo\\Shap.ShapDoc\\Exe\\output.html\""
+    }
+  }
+}

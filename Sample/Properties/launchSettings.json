@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Sample": {
-      "commandName": "Project",
-      "commandLineArgs": "\"C:\\dev\\repo\\Shap.ShapDoc\\Sample\\example.shapdoc\" \"C:\\dev\\repo\\Shap.ShapDoc\\Sample\\output.html\""
-    }
-  }
-}

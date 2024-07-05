@@ -1,7 +1,7 @@
 ﻿using Shap.ShapDoc.Exporter;
 using Shap.ShapDoc.Parser;
 
-namespace Shap.ShapDoc.Sample
+namespace Shap.ShapDoc.Exe
 {
     internal class Program
     {

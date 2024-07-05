@@ -199,6 +199,10 @@ namespace Shap.ShapDoc.Parser
             {
                 throw SyntaxException.FromToken(input.Last(), "Last tag is unclosed");
             }
+            if (ctx.curWords.Count != 0)
+            {
+                ctx.curNode.Children.Add(new("t", ctx.curNode, new() { { "text", string.Join("", ctx.curWords) } }));
+            }
             return new(ctx.curNode);
         }
 
